@@ -1,5 +1,5 @@
 // Load in the CSV file
-d3.csv("../../data/darknet_markets.csv").then(data => {
+d3.csv("../data/darknet_markets.csv").then(data => {
     // console log the data
     console.log("data", data);
 
