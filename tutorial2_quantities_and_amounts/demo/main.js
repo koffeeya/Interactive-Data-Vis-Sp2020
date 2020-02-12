@@ -38,6 +38,7 @@ d3.csv("../../data/squirrelActivities.csv", d3.autoType).then(data => {
   // set up a `bottom` oriented axis based on the xScale we defined above.
 
   const xAxis = d3.axisBottom(xScale).ticks(data.length);
+  
   /** MAIN CODE */
   const svg = d3
     .select("#d3-container") // select html element with id="d3-container"
