@@ -12,7 +12,7 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
     margin = {
         top: 40,
         bottom: 40,
-        left: 80,
+        left: 40,
         right: 40
     };
 
@@ -30,7 +30,7 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
         .domain([0, d3.max(data, d => d.count)])  // set x input values from 0 to max `count` value
         .range([margin.right, width - margin.left]);  // set x output to range from bottom to top margin
 
-    // Set up a bottom-oriented axis, with the number of ticks
+    // Set up a left-oriented axis, with the number of ticks
     // equal to the number of categories in the data (the length)
     const yAxis = d3.axisLeft(yScale).ticks(data.length);
 
