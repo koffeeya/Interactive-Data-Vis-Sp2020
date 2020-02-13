@@ -75,7 +75,7 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
         .attr("class", "label")
         // set coordinates for label
         .attr("y", d => yScale(d.activity) + (yScale.bandwidth()/1.75))
-        .attr("x", d => (margin.left + xScale(d.count)/2))
+        .attr("x", d => (margin.left + (width * 0.05)))
         .text(d => d.count);
 
     // update the svg element
