@@ -61,9 +61,9 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
         .join("rect")
         // set the coordinates for the top-left corner of each rect as scaled values
         .attr("y", d => yScale(d.activity))
-        .attr("x", d => xScale(margin.left))
+        .attr("x", d => xScale(margin.left + (width * 0.04)))
         // set the width, height, and color of each bar
-        .attr("width", d => margin.left + xScale(d.count))
+        .attr("width", d => xScale(d.count))
         .attr("height", yScale.bandwidth())
         .attr("fill", d => colorScale(d.count));
     
@@ -75,7 +75,7 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
         .attr("class", "label")
         // set coordinates for label
         .attr("y", d => yScale(d.activity) + (yScale.bandwidth()/1.75))
-        .attr("x", d => (margin.left + (width * 0.05)))
+        .attr("x", d => (margin.left + (width * 0.07)))
         .text(d => d.count);
 
     // update the svg element
