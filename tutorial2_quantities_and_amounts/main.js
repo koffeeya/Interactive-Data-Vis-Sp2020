@@ -1,6 +1,9 @@
 // load in the data
 d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
-    console.log(data);
+    console.log(data)
+
+    // sort the bars in descending order
+    data.sort((a,b) => b.count - a.count)
 
 
     /* CONSTANTS */
@@ -12,7 +15,7 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
     margin = {
         top: 40,
         bottom: 40,
-        left: 40,
+        left: 80,
         right: 40
     };
 
@@ -30,22 +33,26 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
         .domain([0, d3.max(data, d => d.count)])  // set x input values from 0 to max `count` value
         .range([margin.right, width - margin.left]);  // set x output to range from bottom to top margin
 
-    // Set up a left-oriented axis, with the number of ticks
-    // equal to the number of categories in the data (the length)
-    const yAxis = d3.axisLeft(yScale).ticks(data.length);
+    // Set up a left-oriented axis with tick marks
+    const yAxis = d3
+        .axisLeft(yScale)
+        .ticks(data.length);
 
-    // const colorScale = d3.scale.category10()
+    // Set up color scale
+    const colorScale = d3
+        .scaleLinear()
+        .domain([0, d3.max(data, d => d.count)])
+        .range(["#74CFDD", "#006989"]);
 
 
 
     /* MAIN CODE */
 
-    // create an svg canvas
+    // create a scalable svg canvas
     const svg = d3
         .select("#d3-container")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("viewBox", [0, 0, width, height])
     
     // append rects
     const rect = svg
@@ -58,7 +65,7 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
         // set the width, height, and color of each bar
         .attr("width", d => margin.left + xScale(d.count))
         .attr("height", yScale.bandwidth())
-        .attr("fill", "steelblue");
+        .attr("fill", d => colorScale(d.count));
     
     // append text
     const text = svg
@@ -67,7 +74,7 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
         .join("text")
         .attr("class", "label")
         // set coordinates for label
-        .attr("y", d => yScale(d.activity) + (yScale.bandwidth()/2))
+        .attr("y", d => yScale(d.activity) + (yScale.bandwidth()/1.75))
         .attr("x", d => (margin.left + xScale(d.count)/2))
         .text(d => d.count);
 
@@ -75,6 +82,7 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
     svg
         .append("g")
         .attr("class", "axis")
-        .attr("transform", `translate(${margin.left}, 0)`)
+        .attr("transform", `translate(${margin.left + 25}, 0)`)
         .call(yAxis);
+        
 });

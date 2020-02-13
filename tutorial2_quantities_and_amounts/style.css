@@ -1,0 +1,44 @@
+body {
+    font-family: 'Karla', sans-serif;
+}
+
+h1 {
+    font-family: 'Karla', sans-serif;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 20%;
+    color: #006989;
+    padding-left: 5%;
+}
+
+h3 {
+    font-family: 'Karla', sans-serif;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 0;
+    padding-left: 5%;
+}
+
+p {
+    font-family: 'Karla', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    padding-left: 5%;
+    color: gray;
+}
+
+.axis {
+    font-family: 'Karla', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: darkgray;
+}
+
+.label {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+div {
+    max-width: 75%;
+}
