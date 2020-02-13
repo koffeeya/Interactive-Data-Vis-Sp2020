@@ -11,7 +11,7 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
     // set margins of svg canvas
     const width = window.innerWidth * 0.9
     height = window.innerHeight / 2
-    paddingInner = 0.2
+    paddingInner = 0.3
     margin = {
         top: 40,
         bottom: 40,
@@ -82,7 +82,7 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
     svg
         .append("g")
         .attr("class", "axis")
-        .attr("transform", `translate(${margin.left + 25}, 0)`)
+        .attr("transform", `translate(${width - (width - margin.left - margin.right)}, 0)`)
         .call(yAxis);
         
 });
