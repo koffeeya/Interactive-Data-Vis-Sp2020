@@ -30,7 +30,7 @@ let state = {
 
 /* LOAD DATA 
 load data and run the init() function */
-d3.csv("../../data/gameRatings.csv", d3.autoType).then(raw_data => {
+d3.csv("../data/gameRatings.csv", d3.autoType).then(raw_data => {
   console.log("loaded data!");
   state.data = raw_data;
   init()
