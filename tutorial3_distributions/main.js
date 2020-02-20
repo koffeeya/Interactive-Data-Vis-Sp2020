@@ -84,13 +84,13 @@ function init() {
     .style("opacity", 0);
 
 
+  // add in dropdown options from data
   const genreArray = d3.map(state.data, d => d.genre).keys().sort()
   genreArray.unshift(["All"])
 
   const agreementArray = d3.map(state.data, d => d.user_diff).keys().sort()
   agreementArray.unshift(["All"])
 
-  // add in dropdown options from data
   selectElementGenre
     .selectAll("option")
     .data(genreArray)
@@ -148,8 +148,12 @@ function draw() {
   // Filters
   let filteredData = state.data;
 
-  if (state.selectedGenre !== "All" && state.selectedGenre !== "All") {
-    filteredData = state.data.filter(d => d.genre === state.selectedGenre && d.user_diff === state.selectedAgreement);
+  if (state.selectedGenre !== "All" && state.selectedAgreement !== "All") {
+      filteredData = state.data.filter(d => d.genre === state.selectedGenre && d.user_diff === state.selectedAgreement);
+  } else if (state.selectedGenre !== "All" && state.selectedAgreement == "All") {
+      filteredData = state.data.filter(d => d.genre === state.selectedGenre && "All" === state.selectedAgreement);
+  } else if (state.selectedGenre == "All" && state.selectedAgreement !== "All") {
+      filteredData = state.data.filter(d => "All" === state.selectedGenre && d.user_diff === state.selectedAgreement);
   }
 
   // SVG: Enter, update, and exit
