@@ -55,9 +55,9 @@ function init() {
     .range([height - margin.bottom, margin.top]);
 
   colorScale = d3
-    .scaleOrdinal(d3.schemePastel2)
+    .scaleOrdinal()
     .domain(d3.map(state.data, d => d.user_diff).keys())
-    //.range(["rgba(219,111,99,1)","rgba(19,111,99,0.25)", "rgba(19,111,99,0.15)"])
+    .range(["#044F66", "#50A1BA", "#3EA2C0"])
 
 
   // Axes
@@ -157,7 +157,7 @@ function draw() {
           .style('opacity', 0.9);
         div
           .html(
-            "<h2><strong>" + d.game + "</strong></h2>" + "<p style='color: grey;'><strong> Users and Critics " + d.user_diff + '</strong></p>' + '<p><strong> User Score: </strong>' + d.user_score + ' / 100 </p>' + '<p><strong> Critic Score: </strong>' + d.critic_score + ' / 100 </p>' + "<p style='color: grey;'>" + d.genre + '</p>')
+            "<h2><strong>" + d.game + "</strong></h2>" + "<p style='color: #044F66; font-size:14px; '><strong> Users and Critics " + d.user_diff + '</strong></p>' + '<p><strong> User Rating: </strong>' + d.user_score + ' / 100 </p>' + '<p><strong> Critic Rating: </strong>' + d.critic_score + ' / 100 </p>' + "<p style='color: grey;'>" + d.genre + ' | ' + d.date + '</p>')
           .style("left", (d3.event.pageX) + "px")
           .style("top", (d3.event.pageY - 28) + "px");
       })

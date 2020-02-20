@@ -12,3 +12,14 @@ div.tooltip {
     background: white;		
     pointer-events: none;			
 }
+
+.axis-label {
+    font-size: 14px;
+    fill: black;
+    text-anchor: middle;
+  }
+
+label {
+    padding: 5px;
+    font-size: 14px;
+  }
