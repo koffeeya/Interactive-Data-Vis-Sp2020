@@ -24,7 +24,8 @@ let div;
 variable to store current state of data */
 let state = {
   data: [],
-  selectedGenre: "All"
+  selectedGenre: "All",
+  selectedAgreement: "All"
 };
 
 
@@ -66,9 +67,15 @@ function init() {
 
 
   // UI element setup
-  const selectElement = d3.select("#dropdown").on("change", function () {
+  const selectElementGenre = d3.select("#dropdown").on("change", function () {
     console.log("The new selected genre is", this.value);
     state.selectedGenre = this.value;
+    draw();
+  });
+
+  const selectElementAgree = d3.select("#agree-dropdown").on("change", function () {
+    console.log("The new selected agreement is", this.value);
+    state.selectedAgreement = this.value;
     draw();
   });
 
@@ -77,10 +84,23 @@ function init() {
     .style("opacity", 0);
 
 
+  const genreArray = d3.map(state.data, d => d.genre).keys().sort()
+  genreArray.unshift(["All"])
+
+  const agreementArray = d3.map(state.data, d => d.user_diff).keys().sort()
+  agreementArray.unshift(["All"])
+
   // add in dropdown options from data
-  selectElement
+  selectElementGenre
     .selectAll("option")
-    .data(d3.map(state.data, d => d.genre).keys().sort().concat(["All"]))
+    .data(genreArray)
+    .join("option")
+    .attr("value", d => d)
+    .text(d => d);
+
+  selectElementAgree
+    .selectAll("option")
+    .data(agreementArray)
     .join("option")
     .attr("value", d => d)
     .text(d => d);
@@ -128,8 +148,8 @@ function draw() {
   // Filters
   let filteredData = state.data;
 
-  if (state.selectedGenre !== "All") {
-    filteredData = state.data.filter(d => d.genre === state.selectedGenre);
+  if (state.selectedGenre !== "All" && state.selectedGenre !== "All") {
+    filteredData = state.data.filter(d => d.genre === state.selectedGenre && d.user_diff === state.selectedAgreement);
   }
 
   // SVG: Enter, update, and exit
