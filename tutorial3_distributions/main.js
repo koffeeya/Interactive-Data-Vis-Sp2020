@@ -17,6 +17,7 @@ let svg;
 let xScale;
 let yScale;
 let colorScale;
+let div;
 
 
 /* APPLICATION STATE
@@ -54,14 +55,15 @@ function init() {
     .range([height - margin.bottom, margin.top]);
 
   colorScale = d3
-    .scaleSequential(d3.interpolateRdBu)
-    .domain(d3.extent(state.data, d => d.user_diff))
+    .scaleOrdinal(d3.schemePastel2)
+    .domain(d3.map(state.data, d => d.user_diff).keys())
+    //.range(["rgba(219,111,99,1)","rgba(19,111,99,0.25)", "rgba(19,111,99,0.15)"])
 
 
   // Axes
   const xAxis = (d3.axisBottom(xScale));
   const yAxis = (d3.axisLeft(yScale));
-  
+
 
   // UI element setup
   const selectElement = d3.select("#dropdown").on("change", function () {
@@ -70,11 +72,9 @@ function init() {
     draw();
   });
 
-  const div = d3
-  .select('#d3-container')
-  .append('div')
-  .attr('class', 'tooltip')
-  .style('opacity', 0);
+  div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
 
   // add in dropdown options from data
@@ -106,7 +106,7 @@ function init() {
   svg
     .append("g")
     .attr("class", "axis y-axis")
-    .attr("transform", `translate(0, ${margin.left})`)
+    .attr("transform", `translate(${margin.left}, 0)`)
     .call(yAxis)
     .append("text")
     .attr("class", "axis-label")
@@ -132,12 +132,6 @@ function draw() {
     filteredData = state.data.filter(d => d.genre === state.selectedGenre);
   }
 
-  const div = d3
-  .select('body')
-  .append('div')
-  .attr('class', 'tooltip')
-  .style('opacity', 0);
-
   // SVG: Enter, update, and exit
   const dot = svg
     .selectAll(".dot")
@@ -159,18 +153,19 @@ function draw() {
       .on('mouseover', d => {
         div
           .transition()
-          .duration(200)
+          .duration(50)
           .style('opacity', 0.9);
         div
-          .html(d.game + "</br>" + d.genre + '<h3>User Score: </h3>' + d.user_score + '<h3>Critic Score: </h3>' + d.critic_score)
-          .style('top', d3.event.pageX + 'px')
-          .style('top', d3.event.pageY + 'px');
+          .html(
+            "<h2><strong>" + d.game + "</strong></h2>" + "<p style='color: grey;'><strong> Users and Critics " + d.user_diff + '</strong></p>' + '<p><strong> User Score: </strong>' + d.user_score + ' / 100 </p>' + '<p><strong> Critic Score: </strong>' + d.critic_score + ' / 100 </p>' + "<p style='color: grey;'>" + d.genre + '</p>')
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY - 28) + "px");
       })
       .on('mouseout', () => {
         div
           .transition()
-          .duration(500)
-          .style('opacity', 0)
+          .duration(100)
+          .style('opacity', 0);
       })
       .call(enter =>
         enter
