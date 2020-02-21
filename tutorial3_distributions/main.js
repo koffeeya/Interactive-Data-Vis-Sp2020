@@ -42,7 +42,6 @@ d3.csv("../data/gameRatings.csv", d3.autoType).then(raw_data => {
 /* INITIALIZING FUNCTION 
 runs one time to set up scales, axes, and UI */
 function init() {
-  console.log(d3.map(state.data, d => d.genre).keys().push("All"))
 
   // Scales
   xScale = d3
@@ -149,17 +148,17 @@ function draw() {
   let filteredData = state.data;
 
   if (state.selectedGenre !== "All" && state.selectedAgreement !== "All") {
-      filteredData = state.data.filter(d => d.genre === state.selectedGenre && d.user_diff === state.selectedAgreement);
+    filteredData = state.data.filter(d => d.genre === state.selectedGenre && d.user_diff === state.selectedAgreement);
   } else if (state.selectedGenre !== "All" && state.selectedAgreement == "All") {
-      filteredData = state.data.filter(d => d.genre === state.selectedGenre && "All" === state.selectedAgreement);
+    filteredData = state.data.filter(d => d.genre === state.selectedGenre && "All" === state.selectedAgreement);
   } else if (state.selectedGenre == "All" && state.selectedAgreement !== "All") {
-      filteredData = state.data.filter(d => "All" === state.selectedGenre && d.user_diff === state.selectedAgreement);
+    filteredData = state.data.filter(d => "All" === state.selectedGenre && d.user_diff === state.selectedAgreement);
   }
 
   // SVG: Enter, update, and exit
   const dot = svg
     .selectAll(".dot")
-    .data(filteredData, d => d.name)
+    .data(filteredData, d => d.game)
     .join(
 
       // enter

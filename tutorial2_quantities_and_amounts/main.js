@@ -74,7 +74,7 @@ d3.csv("../data/squirrelActivities.csv", d3.autoType).then(data => {
         .join("text")
         .attr("class", "label")
         // set coordinates for label
-        .attr("y", d => yScale(d.activity) + (yScale.bandwidth()/1.75))
+        .attr("y", d => yScale(d.activity) + (yScale.bandwidth()/1.5))
         .attr("x", d => (margin.left + (width * 0.07)))
         .text(d => d.count);
 
