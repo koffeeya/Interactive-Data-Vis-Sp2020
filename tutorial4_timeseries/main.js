@@ -26,15 +26,19 @@ let state = {
 
 /* LOAD DATA 
 load data and run the init() function */
+const formatYear = d3.timeFormat("%Y")
+
 d3.csv("../data/studentLoans.csv", d3.autotype, d => ({
-  year: d.year,
+  year: formatYear(new Date(d.year)),
   age: d.age_group,
   amount: +d.amount_owed,
-  percent: d.percent_of_total,
+  percent: +d.percent_of_total,
 })).then(raw_data => {
   console.log("raw_data", raw_data);
   state.data = raw_data;
 });
+
+// structure data  d3.nest // d3.stack
 
 
 /* INITIALIZING FUNCTION 
@@ -42,7 +46,6 @@ runs one time to set up scales, axes, and UI */
 function init() {
 
   // Scales
-
 
   // Axes
 
