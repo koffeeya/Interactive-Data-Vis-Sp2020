@@ -23,7 +23,8 @@ let yAxis;
 /* APPLICATION STATE
 variable to store current state of data */
 let state = {
-  data: []
+  data: [],
+  selectedAge: null,
 }
 
 
@@ -33,20 +34,9 @@ d3.csv("../data/studentLoans.csv", d3.autotype, d => ({
   year: new Date(d.year, 0, 1),
   age: d.age_group,
   amount: +d.amount_owed,
-  percent: +d.percent_of_total,
 })).then(raw_data => {
-  // Nest the data by year and store in state.data
-  state.data = raw_data
-
-  nested_data = d3.nest()
-    .key(d => d.year)
-    .key(d => d.age)
-    .entries(state.data)
-
-  init();
-  console.log(state.data)
-  console.log(nested_data)
-  console.log("loaded!")
+  state.data = raw_data,
+  init()
 });
 
 
@@ -65,7 +55,6 @@ function init() {
     .scaleLinear()
     .domain([0, d3.max(state.data, d => d.amount)])
     .range([height - margin.bottom, margin.top]);
-
 
   // Axes
   xAxis = d3.axisBottom(xScale);
@@ -114,39 +103,30 @@ function init() {
 called every time the data/state is updated */
 function draw() {
 
-  // Filters
+ 
 
-  const lineFunc = d3
+    const lineFunc = d3
     .line()
     .x(d => xScale(d.year))
     .y(d => yScale(d.amount));
 
-  // SVG: Enter, update, and exit
-  const dot = svg
+    const dot = svg
     .selectAll(".dot")
-    .data(state.data, d => d.year)
+    .data(state.data, d => d.year) // use `d.year` as the `key` to match between HTML and data elements
     .join(
-      // enter
       enter =>
-      enter
-      .append("circle")
-      .attr("class", "dot")
-      .attr("r", radius)
-      .attr("cy", d => yScale(d.amount))
-      .attr("cx", d => xScale(d.year)),
-
-      // update
+        // enter selections -- all data elements that don't have a `.dot` element attached to them yet
+        enter
+          .append("circle")
+          .attr("class", "dot")
+          .attr("r", radius)
+          .attr("cy", d => yScale(d.amount))
+          .attr("cx", d => xScale(d.year)),
       update => update,
+      exit => exit.remove()
+    );
 
-      // exit
-      exit =>
-      exit.call(exit =>
-        exit
-        .remove())
-
-    )
-
-    const line = svg
+  const line = svg
     .selectAll("path.trend")
     .data(state.data)
     .join(
@@ -157,7 +137,7 @@ function draw() {
           .attr("d", d => lineFunc(d)),
       update => update, // pass through the update selection
       exit => exit.remove()
-    )
+    );
 
-  console.log("drawn!")
+  console.log("drawn!");
 }
