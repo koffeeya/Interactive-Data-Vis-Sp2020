@@ -15,6 +15,13 @@ let svg;
  * */
 let state = {
   // + SET UP STATE
+  geojson: null,
+  earthquakes: null,
+  hover: {
+    latitude: null,
+    longitude: null,
+    state: null,
+  },
 };
 
 /**
@@ -22,11 +29,14 @@ let state = {
  * Using a Promise.all([]), we can load more than one dataset at a time
  * */
 Promise.all([
-  d3.json("PATH_TO_YOUR_GEOJSON"),
-  d3.csv("PATH_TO_ANOTHER_DATASET", d3.autoType),
-]).then(([geojson, otherData]) => {
+  /* d3.json("../data/map_world_countries.json"), */
+  d3.json("../data/world-map.geo.json"),
+  d3.csv("../data/earthquakes.csv", d3.autoType),
+]).then(([geojson, data]) => {
   // + SET STATE WITH DATA
-  console.log("state: ", state);
+    state.geojson = geojson;
+    state.data = data;
+  console.log("earthquakes: ", state.data);
   init();
 });
 
@@ -36,6 +46,11 @@ Promise.all([
  * */
 function init() {
   // create an svg element in our main `d3-container` element
+
+  // GEOJSON TO PROJECTION
+  const projection = d3.geoNaturalEarth1().fitSize([width, height], state.geojson);
+  const path = d3.geoPath().projection(projection);
+
   svg = d3
     .select("#d3-container")
     .append("svg")
@@ -43,7 +58,28 @@ function init() {
     .attr("height", height);
 
   // + SET UP PROJECTION
+  svg
+    .selectAll(".land")
+    .data(state.geojson.features)
+    .join("path")
+    .attr("d", path)
+    .attr("class", "land")
+    .attr("fill", "white")
+    draw();
+
   // + SET UP GEOPATH
+
+  svg
+    .selectAll(".circle")
+    .data(state.data)
+    .join("circle")
+    .attr("r", 4)
+    .attr("fill", "green")
+    .attr("opacity", 0.4)
+    .attr("transform", d => {
+      const [x, y] = projection([+d.longitude, +d.latitude]);
+      return `translate(${x}, ${y})`;
+    });
 
   // + DRAW BASE MAP PATH
   // + ADD EVENT LISTENERS (if you want)
@@ -55,4 +91,5 @@ function init() {
  * DRAW FUNCTION
  * we call this everytime there is an update to the data/state
  * */
-function draw() {}
+function draw() {
+}
