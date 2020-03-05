@@ -3,9 +3,20 @@
     <meta charset="utf-8">
     <title>Interactive Data Visualization Tutorial</title>
     <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css?family=Inria+Serif:300,300i,400,400i,700,700i&display=swap" rel="stylesheet">
   </head>
   <body>
-    Welcome to Interactive Data Visualization Tutorials
+    <span><h1>Earthquakes</h1> <h3>in February 2020</h3></span>
+    <p style='font-weight: 100;
+    color: grey;
+    font-size: 20px;
+    line-height: 0.25;
+    padding-left: 15%;
+    padding-bottom: 15px'
+  >This chart shows detectable earthquakes - those with a magnitude above 3.0 that could feasibly be felt by people. This data comes from the <a href='https://earthquake.usgs.gov/earthquakes/feed/v1.0/csv.php' target='_new'>USGS.</a></p>
+    <div id="tooltip-container"></div>
+    <div>
+    </div>
     <div id="d3-container"> </div>
     <script src="../lib/d3.js"></script>
     <script src="main.js"></script>

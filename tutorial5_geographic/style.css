@@ -1,20 +1,39 @@
 body {
-    /* ref: https://fonts.google.com/specimen/Source+Sans+Pro?selection.family=Source+Sans+Pro */
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: 'Inria Serif', serif;
     padding: 1em 3em;
+    background-color: #080F0F;
+  }
+
+  h1 {
+    font-weight: 900;
+    color: #E8E9E9;
+    font-size: 75px;
+    line-height: 0.25;
+    padding-left: 15%;
+  }
+
+  h3 {
+    font-weight: 400;
+    color: #EF233C;
+    font-size: 35px;
+    line-height: 0.25;
+    padding-left: 15%;
   }
   
   .land {
     stroke-width: 0.5px;
-    stroke: grey;
-    fill:grey;
+    stroke: #1E2424;
+    fill: #1E2424;
   }
 
-  .circle {
-    stroke-width: 0.5px;
-    fill: black;
-  }
-
-  #d3-container {
-      background-color: white;
-  }
+  div.tooltip {	
+    position: absolute;			
+    text-align: left;			
+    width: 175px;					
+    height: 225px;
+    padding: 15px;			
+    font: 12px;		
+    background: #080F0F;
+    color: white;	
+    pointer-events: none;			
+}
