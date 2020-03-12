@@ -82,8 +82,6 @@ function init() {
     .data(root.leaves())
     .join("g")
     .attr("transform", d => `translate(${d.x},${d.y})`);
-
-    // Add rects + colorscale + tooltip
   
   leaf
     .append("circle")
