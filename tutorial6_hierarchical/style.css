@@ -1,16 +1,19 @@
 body {
-    /* ref: https://fonts.google.com/specimen/Source+Sans+Pro?selection.family=Source+Sans+Pro */
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: 'Varela Round', sans-serif;
     padding: 1em 3em;
+    text-align: center;
+    background-color: #011627;
+    color: white;
   }
   
   .tooltip {
     display: block;
     height: fit-content;
-    background-color: white;
+    background-color: #011627;
     opacity: 0.8;
     pointer-events: none;
-    padding: 5px;
+    padding: 10px;
+    text-align: left;
   }
   
   path.state {
